@@ -1,4 +1,4 @@
-import { User } from '../../models/User.js';
+import { User } from '@/app/models/User';
 import mongoose from 'mongoose';
 
 export async function POST(req) {

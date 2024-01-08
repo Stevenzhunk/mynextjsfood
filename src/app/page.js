@@ -1,4 +1,3 @@
-import Header from './components/layout/Header';
 import Hero from './components/layout/Hero';
 import HomeMenu from './components/layout/HomeMenu';
 import SectionHeaders from './components/layout/SectionHeaders';
@@ -34,7 +33,7 @@ export default function Home() {
           subHeader={"Don't hesitate"}
           mainHeader={'Contact us'}
         />
-        <div classNamte="mt-8">
+        <div className="mt-8">
           <a
             className="text-4xl underline text-gray-500"
             href="+46 783 128 158"
