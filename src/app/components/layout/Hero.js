@@ -32,9 +32,11 @@ export default function Hero() {
         <div className="relative">
           <Image
             src={'/pizza.png'}
-            layout={'fill'}
             alt={'Pizza'}
-            objectFit={'contain'}
+            className="object-contain w-full h-full absolute"
+            width={800}
+            height={800}
+            priority={true}
           />
         </div>
       </section>
