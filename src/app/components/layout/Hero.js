@@ -17,12 +17,12 @@ export default function Hero() {
           </p>
 
           <div className="flex gap-4">
-            <button className="bg-primary flex gap-2 uppercase items-center text-sm text-white px-8 py-2 rounded-full">
+            <button className="bg-primary flex gap-2 uppercase items-center justify-center text-sm text-white px-4 py-2 rounded-full">
               {' '}
               Order now
               <Right />
             </button>
-            <button className="flex gap-2 py-2 text-gray-600 font-semibold">
+            <button className="flex gap-2 py-2 text-gray-600 font-semibold border-0 items-center">
               Learn more
               <Right />
             </button>
