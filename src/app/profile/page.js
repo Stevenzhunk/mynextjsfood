@@ -2,11 +2,54 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function ProfilePage() {
   const session = useSession();
-  console.log(session);
+  const [userName, setUserName] = useState('');
+  const [saved, setSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [image, setImage] = useState('');
   const { status } = session;
+  //console.log(session);
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      setUserName(session.data.user.name);
+      setImage(session.data.user.image);
+    }
+  }, [session, status]);
+
+  async function handleProfileInfoUpdate(ev) {
+    ev.preventDefault();
+    setSaved(false);
+    setIsSaving(true);
+    const response = await fetch('/api/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: userName, image }),
+    });
+    setIsSaving(false);
+    if (response.ok) {
+      setSaved(true);
+    }
+  }
+
+  async function handleFileChange(ev) {
+    const files = ev.target.files;
+
+    if (files?.length === 1) {
+      const data = new FormData();
+      data.set('file', files[0]);
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: data,
+      });
+      const link = await response.json();
+      setImage(link);
+    }
+  }
 
   if (status === 'loading') {
     return 'loading...';
@@ -15,37 +58,67 @@ export default function ProfilePage() {
     redirect('/login');
   }
 
-  const userImage = session.data.user.image;
   return (
     <section className="mt-8">
       <h1 className=" text-center text-primary text-4xl mb-4 ">Profile</h1>
-      <form className="max-w-md mx-auto ">
+      <div className="max-w-md mx-auto">
+        {saved && (
+          <>
+            <h2 className="text-center bg-green-100 p-4 rounded-lg border border-green-300">
+              Profile saved!
+            </h2>
+          </>
+        )}
+        {isSaving && (
+          <>
+            <h2 className="text-center bg-blue-100 p-4 rounded-lg border border-blue-300">
+              Saving...
+            </h2>
+          </>
+        )}
         <div className="flex gap-4 item-center ">
           <div>
-            <div className=" p-2 rounded-lg relative ">
+            <div className=" p-2 rounded-lg relative max-w-[xs] ">
               <div className="relative h-24">
-                <Image
-                  className="rounded-lg w-full h-full mb-1 object-contain"
-                  src={userImage}
-                  width={250}
-                  height={250}
-                  alt={'avatar'}
-                />{' '}
-                <button type="button">Edit</button>
+                {image && (
+                  <Image
+                    className="rounded-lg w-full h-full mb-1 object-contain"
+                    src={image}
+                    width={250}
+                    height={250}
+                    alt={'avatar'}
+                  />
+                )}
+
+                <label>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                  <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
+                    Edit
+                  </span>
+                </label>
               </div>
             </div>
           </div>
-          <div className="grow">
-            <input type="text" placeholder="First and last name " />
+          <form className="grow" onSubmit={handleProfileInfoUpdate}>
+            <input
+              type="text"
+              placeholder="First and last name "
+              value={userName}
+              onChange={(ev) => setUserName(ev.target.value)}
+            />
             <input
               type="email"
               disabled={true}
               value={session.data.user.email}
             />
             <button type="submit">Save</button>
-          </div>
+          </form>
         </div>
-      </form>
+      </div>
     </section>
   );
 }

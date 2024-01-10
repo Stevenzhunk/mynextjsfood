@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'stevenz-food-ordering.s3.amazonaws.com',
+      },
     ],
   },
 };

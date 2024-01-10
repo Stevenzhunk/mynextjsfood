@@ -1,9 +1,19 @@
-import { Roboto } from 'next/font/google';
+import { Roboto, Inter, Poppins } from 'next/font/google';
 import './globals.css';
 import Header from './components/layout/Header';
 import { AppProvider } from './components/AppContext';
 
 const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+});
+
+const poppins = Poppins({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
 });
