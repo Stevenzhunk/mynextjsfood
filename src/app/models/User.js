@@ -1,5 +1,4 @@
 import { Schema, model, models } from 'mongoose';
-import bcrypt from 'bcrypt';
 
 const UserSchema = new Schema(
   {
@@ -9,6 +8,11 @@ const UserSchema = new Schema(
       type: String,
     },
     image: { type: String },
+    streetAddress: { type: String },
+    postalCode: { type: String },
+    city: { type: String },
+    country: { type: String },
+    phone: { type: String },
   },
   { timestamps: true }
 );

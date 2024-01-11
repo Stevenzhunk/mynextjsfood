@@ -3,21 +3,34 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import InfoBox from './../components/layout/InfoBox';
-import SuccessBox from './../components/layout/SuccessBox';
 import toast from 'react-hot-toast';
 
 export default function ProfilePage() {
   const session = useSession();
   const [userName, setUserName] = useState('');
   const [image, setImage] = useState('');
+
+  const [phone, setPhone] = useState('');
+  const [streetAddress, setStreetAddress] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+
   const { status } = session;
-  //console.log(session);
 
   useEffect(() => {
     if (status === 'authenticated') {
       setUserName(session.data.user.name);
       setImage(session.data.user.image);
+      fetch('/api/profile').then((response) => {
+        response.json().then((data) => {
+          setPhone(data.phone);
+          setStreetAddress(data.streetAddress);
+          setCity(data.city);
+          setPostalCode(data.postalCode);
+          setCountry(data.country);
+        });
+      });
     }
   }, [session, status]);
 
@@ -28,7 +41,15 @@ export default function ProfilePage() {
       const response = await fetch('/api/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: userName, image }),
+        body: JSON.stringify({
+          name: userName,
+          image,
+          streetAddress,
+          phone,
+          postalCode,
+          city,
+          country,
+        }),
       });
 
       if (response.ok) resolve();
@@ -49,18 +70,26 @@ export default function ProfilePage() {
       const data = new FormData();
       data.set('file', files[0]);
 
-      toast('Uploading....');
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: data,
+      const uploadPromise = new Promise(async (resolve, reject) => {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: data,
+        });
+
+        if (response.ok) {
+          const link = await response.json();
+          setImage(link);
+          resolve();
+        } else {
+          reject();
+        }
       });
-      if (response.ok) {
-        toast.success('Upload complete!');
-      } else {
-        toast.error('Cannot Upload!');
-      }
-      const link = await response.json();
-      setImage(link);
+
+      await toast.promise(uploadPromise, {
+        loading: 'Uploading...',
+        success: 'Uploaded',
+        error: 'Could not be uploaded',
+      });
     }
   }
 
@@ -75,7 +104,7 @@ export default function ProfilePage() {
     <section className="mt-8">
       <h1 className=" text-center text-primary text-4xl mb-4 ">Profile</h1>
       <div className="max-w-md mx-auto">
-        <div className="flex gap-4 item-center ">
+        <div className="flex gap-4">
           <div>
             <div className=" p-2 rounded-lg relative max-w-[xs] ">
               <div className="relative h-24">
@@ -113,6 +142,41 @@ export default function ProfilePage() {
               type="email"
               disabled={true}
               value={session.data.user.email}
+            />
+            <input
+              type="tel"
+              placeholder="Phone number"
+              value={phone}
+              onChange={(ev) => setPhone(ev.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Street Address"
+              value={streetAddress}
+              onChange={(ev) => setStreetAddress(ev.target.value)}
+            />
+            <div className="flex gap-2">
+              <input
+                style={{ margin: '0' }}
+                type="text"
+                placeholder="City"
+                value={city}
+                onChange={(ev) => setCity(ev.target.value)}
+              />
+              <input
+                style={{ margin: '0' }}
+                type="text"
+                placeholder="Postal Code"
+                value={postalCode}
+                onChange={(ev) => setPostalCode(ev.target.value)}
+              />
+            </div>
+
+            <input
+              type="text"
+              placeholder="Country"
+              value={country}
+              onChange={(ev) => setCountry(ev.target.value)}
             />
             <button type="submit">Save</button>
           </form>
