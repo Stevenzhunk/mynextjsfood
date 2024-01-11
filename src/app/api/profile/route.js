@@ -4,7 +4,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { User } from '@/app/models/User';
 
 export async function PUT(req) {
-  mongoose.connect(process.env.MONGO_URL);
+  mongoose.connect(process.env.MONGO_URL_NEXT);
   const data = await req.json();
   const session = await getServerSession(authOptions);
   const email = session.user.email;

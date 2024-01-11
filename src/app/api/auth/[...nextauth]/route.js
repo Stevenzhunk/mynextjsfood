@@ -30,7 +30,12 @@ export const authOptions = {
         const email = credentials?.email;
         const password = credentials?.password;
 
-        mongoose.connect(process.env.MONGO_URL);
+        try {
+          const response = await mongoose.connect(process.env.MONGO_URL_NEXT);
+          // console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
 
         const user = await User.findOne({ email });
         const passwordOk = user && bcrypt.compareSync(password, user.password);
