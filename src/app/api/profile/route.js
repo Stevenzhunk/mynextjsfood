@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { User } from '@/app/models/User';
-import { UserInfo } from './../../models/UserInfo';
+import { UserInfo } from '@/app/models/UserInfo';
 
 export async function PUT(req) {
   mongoose.connect(process.env.MONGO_URL_NEXT);
@@ -27,7 +27,7 @@ export async function GET() {
     return Response.json({});
   }
   const user = await User.findOne({ email }).lean();
-  const userInfo = await UserInfo.findOne({ email });
+  const userInfo = await UserInfo.findOne({ email }).lean();
   return Response.json({
     ...user,
     ...userInfo,

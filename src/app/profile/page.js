@@ -28,6 +28,7 @@ export default function ProfilePage() {
       setImage(session.data.user.image);
       fetch('/api/profile').then((response) => {
         response.json().then((data) => {
+          //console.log(data);
           setPhone(data.phone);
           setStreetAddress(data.streetAddress);
           setCity(data.city);
@@ -44,22 +45,26 @@ export default function ProfilePage() {
     ev.preventDefault();
 
     const savingPromise = new Promise(async (resolve, reject) => {
-      const response = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: userName,
-          image,
-          streetAddress,
-          phone,
-          postalCode,
-          city,
-          country,
-        }),
-      });
-
-      if (response.ok) resolve();
-      else reject();
+      try {
+        const response = await fetch('/api/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: userName,
+            image,
+            streetAddress,
+            phone,
+            postalCode,
+            city,
+            country,
+          }),
+        });
+        //console.log(response);
+        if (response.ok) resolve();
+        else reject();
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     await toast.promise(savingPromise, {
