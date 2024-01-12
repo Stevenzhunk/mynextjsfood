@@ -1,9 +1,11 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import UserTabs from './../components/layout/UserTabs';
 
 export default function ProfilePage() {
   const session = useSession();
@@ -15,6 +17,8 @@ export default function ProfilePage() {
   const [postalCode, setPostalCode] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [profileFetched, setProfileFetched] = useState(false);
 
   const { status } = session;
 
@@ -29,6 +33,8 @@ export default function ProfilePage() {
           setCity(data.city);
           setPostalCode(data.postalCode);
           setCountry(data.country);
+          setIsAdmin(data.admin);
+          setProfileFetched(true);
         });
       });
     }
@@ -93,7 +99,7 @@ export default function ProfilePage() {
     }
   }
 
-  if (status === 'loading') {
+  if (status === 'loading' || !profileFetched) {
     return 'loading...';
   }
   if (status === 'unauthenticated') {
@@ -102,53 +108,57 @@ export default function ProfilePage() {
 
   return (
     <section className="mt-8">
-      <h1 className=" text-center text-primary text-4xl mb-4 ">Profile</h1>
-      <div className="max-w-md mx-auto">
+      <UserTabs isAdmin={isAdmin} />
+
+      <div className="max-w-md mx-auto mt-8">
         <div className="flex gap-4">
           <div>
-            <div className=" p-2 rounded-lg relative max-w-[xs] ">
-              <div className="relative h-24">
-                {image && (
-                  <Image
-                    className="rounded-lg w-full h-full mb-1 object-contain"
-                    src={image}
-                    width={250}
-                    height={250}
-                    alt={'avatar'}
-                  />
-                )}
+            <div className=" p-2 rounded-lg relative max-w-[120px] ">
+              {image && (
+                <Image
+                  className="w-full h-full mb-1 object-contain rounded-xl"
+                  src={image}
+                  width={250}
+                  height={250}
+                  alt={'avatar'}
+                />
+              )}
 
-                <label>
-                  <input
-                    type="file"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                  <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
-                    Edit
-                  </span>
-                </label>
-              </div>
+              <label>
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
+                  Edit
+                </span>
+              </label>
             </div>
           </div>
           <form className="grow" onSubmit={handleProfileInfoUpdate}>
+            <label>First and Last name</label>
             <input
               type="text"
               placeholder="First and last name "
               value={userName}
               onChange={(ev) => setUserName(ev.target.value)}
             />
+            <label>Email</label>
             <input
               type="email"
               disabled={true}
               value={session.data.user.email}
+              placeholder={'email'}
             />
+            <label>Phone</label>
             <input
               type="tel"
               placeholder="Phone number"
               value={phone}
               onChange={(ev) => setPhone(ev.target.value)}
             />
+            <label>Street Adress</label>
             <input
               type="text"
               placeholder="Street Address"
@@ -156,22 +166,27 @@ export default function ProfilePage() {
               onChange={(ev) => setStreetAddress(ev.target.value)}
             />
             <div className="flex gap-2">
-              <input
-                style={{ margin: '0' }}
-                type="text"
-                placeholder="City"
-                value={city}
-                onChange={(ev) => setCity(ev.target.value)}
-              />
-              <input
-                style={{ margin: '0' }}
-                type="text"
-                placeholder="Postal Code"
-                value={postalCode}
-                onChange={(ev) => setPostalCode(ev.target.value)}
-              />
+              <div>
+                <label>City</label>
+                <input
+                  type="text"
+                  placeholder="City"
+                  value={city}
+                  onChange={(ev) => setCity(ev.target.value)}
+                />
+              </div>
+              <div>
+                <label>Postal Code</label>
+                <input
+                  type="text"
+                  placeholder="Postal Code"
+                  value={postalCode}
+                  onChange={(ev) => setPostalCode(ev.target.value)}
+                />
+              </div>
             </div>
 
+            <label>Country</label>
             <input
               type="text"
               placeholder="Country"
