@@ -9,9 +9,9 @@ import UserTabs from './../components/layout/UserTabs';
 
 export default function ProfilePage() {
   const session = useSession();
+
   const [userName, setUserName] = useState('');
   const [image, setImage] = useState('');
-
   const [phone, setPhone] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
@@ -28,7 +28,6 @@ export default function ProfilePage() {
       setImage(session.data.user.image);
       fetch('/api/profile').then((response) => {
         response.json().then((data) => {
-          //console.log(data);
           setPhone(data.phone);
           setStreetAddress(data.streetAddress);
           setCity(data.city);
@@ -59,7 +58,6 @@ export default function ProfilePage() {
             country,
           }),
         });
-        //console.log(response);
         if (response.ok) resolve();
         else reject();
       } catch (error) {
