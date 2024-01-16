@@ -1,5 +1,6 @@
 'use client';
 import { useSession, signOut } from 'next-auth/react';
+import Image from 'next/image';
 
 import Link from 'next/link';
 
@@ -15,8 +16,18 @@ export default function Header() {
   return (
     <header className="flex item-center justify-between">
       <nav className="flex items-center gap-8 text-gray-500 font-semibold">
-        <Link className="text-primary font-semibold text-2xl" href="/">
-          STPIZZA{''}
+        <Link
+          className="text-primary font-semibold text-2xl flex gap-2"
+          href="/"
+        >
+          {/* STPIZZA{''} */}
+          <Image
+            src="/planet.jpg"
+            alt="icon"
+            width={120}
+            height={120}
+            className="w-20 items-center justify-center"
+          />
         </Link>
         <Link href={'/'}>Home</Link>
         <Link href={''}>Menu</Link>

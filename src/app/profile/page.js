@@ -1,11 +1,11 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import UserTabs from './../components/layout/UserTabs';
+import EditableImage from './../components/layout/EditableImage';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProfilePage() {
   const session = useSession();
@@ -67,46 +67,9 @@ export default function ProfilePage() {
 
     await toast.promise(savingPromise, {
       loading: 'Saving...',
-      success: <b>Settings saved!</b>,
+      success: <b>Profile saved!</b>,
       error: <b>Could not save.</b>,
     });
-  }
-
-  async function handleFileChange(ev) {
-    const files = ev.target.files;
-
-    if (files?.length === 1) {
-      const data = new FormData();
-      data.set('file', files[0]);
-
-      const uploadPromise = new Promise(async (resolve, reject) => {
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: data,
-        });
-
-        if (response.ok) {
-          const link = await response.json();
-          setImage(link);
-          resolve();
-        } else {
-          reject();
-        }
-      });
-
-      await toast.promise(uploadPromise, {
-        loading: 'Uploading...',
-        success: 'Uploaded',
-        error: 'Could not be uploaded',
-      });
-    }
-  }
-
-  if (status === 'loading' || !profileFetched) {
-    return 'loading...';
-  }
-  if (status === 'unauthenticated') {
-    redirect('/login');
   }
 
   return (
@@ -117,26 +80,7 @@ export default function ProfilePage() {
         <div className="flex gap-4">
           <div>
             <div className=" p-2 rounded-lg relative max-w-[120px] ">
-              {image && (
-                <Image
-                  className="w-full h-full mb-1 object-contain rounded-xl"
-                  src={image}
-                  width={250}
-                  height={250}
-                  alt={'avatar'}
-                />
-              )}
-
-              <label>
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-                <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
-                  Edit
-                </span>
-              </label>
+              <EditableImage link={image} setLink={setImage} />
             </div>
           </div>
           <form className="grow" onSubmit={handleProfileInfoUpdate}>
@@ -151,7 +95,7 @@ export default function ProfilePage() {
             <input
               type="email"
               disabled={true}
-              value={session.data.user.email}
+              value={session?.data?.user?.email}
               placeholder={'email'}
             />
             <label>Phone</label>
