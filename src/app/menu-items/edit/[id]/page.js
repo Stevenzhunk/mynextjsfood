@@ -1,14 +1,15 @@
 'use client';
 import { useProfile } from '@/app/components/UseProfile';
-import UserTabs from '@/app/components/layout/UserTabs';
-import EditableImage from '@/app/components/layout/EditableImage';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import Link from 'next/link';
 import Left from '@/app/components/icons/Left';
-import { redirect } from 'next/navigation';
+import EditableImage from '@/app/components/layout/EditableImage';
+import UserTabs from '@/app/components/layout/UserTabs';
+import Link from 'next/link';
+import { redirect, useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
-export default function NewMenuItemPage() {
+export default function EditMenuItemPage() {
+  const { id } = useParams();
   const [image, setImage] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -16,12 +17,24 @@ export default function NewMenuItemPage() {
   const [redirectToItems, setRedirectToItems] = useState(false);
   const { loading, data } = useProfile();
 
+  useEffect(() => {
+    fetch('/api/menu-items').then((res) => {
+      res.json().then((items) => {
+        const item = items.find((i) => i._id === id);
+        setImage(item.image);
+        setName(item.name);
+        setDescription(item.description);
+        setBasePrice(item.basePrice);
+      });
+    });
+  }, [id]);
+
   async function handleFormSubmit(ev) {
     ev.preventDefault();
-    const data = { image, name, description, basePrice };
+    const data = { image, name, description, basePrice, _id: id };
     const savingPromise = new Promise(async (resolve, reject) => {
       const response = await fetch('/api/menu-items', {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
       });
@@ -31,9 +44,9 @@ export default function NewMenuItemPage() {
     });
 
     await toast.promise(savingPromise, {
-      loading: 'Creating new...',
-      success: <b>Item Created!</b>,
-      error: <b>Could not be created</b>,
+      loading: 'Updating new...',
+      success: <b>Item Updated</b>,
+      error: <b>Could not be updated</b>,
     });
 
     setRedirectToItems(true);

@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import UserTabs from '../components/layout/UserTabs';
+import UserTabs from '@/app/components/layout/UserTabs';
 import { useProfile } from './../components/UseProfile';
 import Right from '../components/icons/Right';
 import { useEffect, useState } from 'react';
