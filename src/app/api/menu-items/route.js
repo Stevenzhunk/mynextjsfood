@@ -19,3 +19,11 @@ export async function GET() {
   mongoose.connect(process.env.MONGO_URL_NEXT);
   return Response.json(await MenuItem.find());
 }
+
+export async function DELETE(req) {
+  mongoose.connect(process.env.MONGO_URL_NEXT);
+  const url = new URL(req.url);
+  const _id = url.searchParams.get('_id');
+  await MenuItem.deleteOne({ _id });
+  return Response.json(true);
+}
