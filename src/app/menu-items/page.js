@@ -27,7 +27,7 @@ export default function MenuItemsPage() {
   }
 
   return (
-    <section className="mt-8 max-w-md mx-auto">
+    <section className="mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={true} />
       <div className="mt-8">
         <Link className="button flex " href={'/menu-items/new'}>
@@ -50,8 +50,8 @@ export default function MenuItemsPage() {
                   <Image
                     src={item.image}
                     alt={''}
-                    width={100}
-                    height={200}
+                    width={150}
+                    height={250}
                     className="rounded-md w-full h-full"
                   />
                 </div>

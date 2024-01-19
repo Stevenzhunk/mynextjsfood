@@ -83,15 +83,15 @@ export default function EditMenuItemPage() {
   return (
     <section className="mt-8">
       <UserTabs isAdmin={true} />
-      <div className="max-w-md mx-auto mt-8">
+      <div className="max-w-2xl mx-auto mt-8">
         <Link href={'/menu-items'} className="button">
           <Left />
           <span>Show all menu items</span>
         </Link>
       </div>
       <MenuItemForm onSubmit={handleFormSubmit} menuItem={menuItem} />
-      <div className="max-w-md mx-auto mt-4">
-        <div className="max-w-xs ml-auto pl-4">
+      <div className="max-w-2xl mx-auto mt-4">
+        <div className="max-w-md ml-auto  items-center">
           <DeleteButton
             label="Delete this menu item"
             onDelete={handleDeleteClick}
