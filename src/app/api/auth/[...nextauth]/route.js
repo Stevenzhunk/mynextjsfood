@@ -4,20 +4,15 @@ import { User } from '@/app/models/User';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import { MongoDBAdapter } from '@auth/mongodb-adapter';
+
 import clientPromise from '@/app/libs/mongoConnect';
 
 export const authOptions = {
   secret: process.env.SECRET,
-  adapter: MongoDBAdapter(clientPromise),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      session: {
-        strategy: 'jwt',
-        maxAge: 30 * 24 * 60 * 60, // 30 days
-      },
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -35,22 +30,27 @@ export const authOptions = {
         const password = credentials?.password;
 
         try {
-          const response = await mongoose.connect(process.env.MONGO_URL_NEXT);
-          // console.log(response);
+          await mongoose.connect(process.env.MONGO_URL_NEXT);
         } catch (error) {
           console.log(error);
         }
 
         const user = await User.findOne({ email });
+
         const passwordOk = user && bcrypt.compareSync(password, user.password);
 
         if (passwordOk) {
+          console.log(user);
           return user;
         }
         return null;
       },
     }),
   ],
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
 };
 
 const handler = NextAuth(authOptions);

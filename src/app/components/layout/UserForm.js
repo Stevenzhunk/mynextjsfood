@@ -1,6 +1,7 @@
 'use client';
 import EditableImage from '@/app/components/layout/EditableImage';
 import { useState } from 'react';
+import { useProfile } from '../UseProfile';
 
 export default function UserForm({ user, onSave }) {
   const [userName, setUserName] = useState(user?.name || '');
@@ -10,6 +11,8 @@ export default function UserForm({ user, onSave }) {
   const [postalCode, setPostalCode] = useState(user?.postalCode || '');
   const [city, setCity] = useState(user?.city || '');
   const [country, setCountry] = useState(user?.country || '');
+  const [admin, setAdmin] = useState(user?.admin || false);
+  const { data: loggedInUserData } = useProfile();
 
   return (
     <div className="flex gap-4">
@@ -87,6 +90,24 @@ export default function UserForm({ user, onSave }) {
           value={country}
           onChange={(ev) => setCountry(ev.target.value)}
         />
+        {loggedInUserData.admin && (
+          <div>
+            <label
+              className="p-2 inline-flex items-center gap-2 mb-2"
+              htmlFor="adminCb"
+            >
+              <input
+                id="adminCb"
+                type="checkbox"
+                value={1}
+                checked={admin}
+                onClick={(ev) => setAdmin(ev.target.checked)}
+              />
+              <span>Admin</span>
+            </label>
+          </div>
+        )}
+
         <button type="submit">Save</button>
       </form>
     </div>

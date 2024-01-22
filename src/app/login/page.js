@@ -12,15 +12,24 @@ export default function LoginPage() {
   async function handleFormSubmit(ev) {
     ev.preventDefault();
     setLoginInProgress(true);
-
-    await signIn('credentials', { email, password, callbackUrl: '/' });
-
-    setLoginInProgress(false);
+    try {
+      const response = await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: '/',
+      });
+      setLoginInProgress(false);
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <section className="mt-8">
       <h1 className="text-center text-primary text-4xl mb-4">Login</h1>
-      <form className="max-w-xs mx-auto" onSubmit={handleFormSubmit}>
+      <form
+        className="max-w-xs mx-auto"
+        onSubmit={(ev) => handleFormSubmit(ev)}
+      >
         <input
           type="email"
           name="email"
