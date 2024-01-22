@@ -12,6 +12,7 @@ export default function UserForm({ user, onSave }) {
   const [city, setCity] = useState(user?.city || '');
   const [country, setCountry] = useState(user?.country || '');
   const [admin, setAdmin] = useState(user?.admin || false);
+  const [email, setEmail] = useState(user?.email || '');
   const { data: loggedInUserData } = useProfile();
 
   return (
@@ -31,6 +32,7 @@ export default function UserForm({ user, onSave }) {
             streetAddress,
             country,
             postalCode,
+            admin,
           })
         }
       >
@@ -45,7 +47,7 @@ export default function UserForm({ user, onSave }) {
         <input
           type="email"
           disabled={true}
-          value={user.email}
+          value={email}
           placeholder={'email'}
         />
         <label>Phone</label>

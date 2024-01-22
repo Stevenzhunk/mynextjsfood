@@ -10,7 +10,6 @@
     "traceDep": "next dev --trace-deprecation"
   },
   "dependencies": {
-    "@auth/mongodb-adapter": "^2.0.12",
     "@aws-sdk/client-s3": "^3.489.0",
     "bcrypt": "^5.1.1",
     "mongodb": "^6.3.0",
