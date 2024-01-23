@@ -15,7 +15,6 @@ export default function MenuPage() {
       res.json().then((menuItems) => setMenuItems(menuItems));
     });
   }, []);
-  console.log(menuItems);
   return (
     <section className="mt-8">
       {categories?.length > 0 &&
