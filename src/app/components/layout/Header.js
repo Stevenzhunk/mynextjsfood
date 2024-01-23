@@ -48,7 +48,7 @@ export default function Header() {
             <button
               onClick={() => {
                 signOut();
-                redirect(`/`);
+                redireczt(`/`);
               }}
               className="bg-primary rounded-full text-white px-8 py-2"
             >

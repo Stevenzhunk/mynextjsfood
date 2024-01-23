@@ -1,5 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { CartContext } from '../AppContext';
+import toast from 'react-hot-toast';
+import MenuItemFile from './MenuItemFile';
+import Image from 'next/image';
 
 export default function MenuItem(menuItem) {
   const {
@@ -12,29 +15,66 @@ export default function MenuItem(menuItem) {
     index,
   } = menuItem;
 
+  const [showPopup, setShowPopup] = useState(false);
   const { addToCart } = useContext(CartContext);
 
-  return (
-    <div
-      className="bg-gray-200 p-4 rounded-lg text-center group hover:bg-white hover:shadow-md hover:shadow-black/25 transition-all"
-      key={index}
-    >
-      <div className="text-center">
-        <img
-          src={image}
-          alt="pizza"
-          className="max-h-auto max-h-24 block mx-auto"
-        />
-      </div>
+  const NumberBasePrice = parseInt(basePrice);
 
-      <h4 className="font-semibold my-3 text-xl">{name}</h4>
-      <p className="text-gray-500 text-sm line-clamp-3">{description}</p>
-      <button
-        onClick={() => addToCart(menuItem)}
-        className="bg-primary mt-4 text-white rounded-full px-8 py-2"
-      >
-        Add to cart ${basePrice}
-      </button>
-    </div>
+  function handleAddToCartButtonClick() {
+    if (sizes.length === 0 && extraIngredientPrices.length === 0) {
+      addToCart(menuItem);
+      toast.success('Added to cart!');
+    } else {
+      setShowPopup(true);
+    }
+  }
+
+  return (
+    <>
+      {showPopup && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center ">
+          <div className="bg-white p-4 rounded-gl max-w-md">
+            <Image
+              src={image}
+              alt={name}
+              width={200}
+              height={200}
+              className="mx-auto"
+            />
+            <h2 className="text-lg font-bold text-center mb-2">{name}</h2>
+            <p className="text-center text-gray-500 text-sm mb-2">
+              {description}
+            </p>
+            {sizes?.length > 0 && (
+              <div className="p-2">
+                <h3 className="text-center text-gray-700">Pick your size</h3>
+                {sizes.map((size) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <label className="flex items-center gap-2 p-3 border rounded-md mb-1">
+                    <input type="radio" name="size" />
+                    {size.name} ${size.price + NumberBasePrice}
+                  </label>
+                ))}
+              </div>
+            )}
+            {extraIngredientPrices?.length > 0 && (
+              <div className="py-2">
+                <div className="p-2">
+                  <h3 className="text-center text-gray-700">Pick your extra</h3>
+                  {extraIngredientPrices.map((extraThing) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <label className="flex items-center gap-2 p-3 border rounded-md mb-1">
+                      <input type="checkbox" name={extraThing.name} />
+                      {extraThing.name} ${extraThing.price}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      <MenuItemFile onAddToCart={handleAddToCartButtonClick} {...menuItem} />
+    </>
   );
 }
