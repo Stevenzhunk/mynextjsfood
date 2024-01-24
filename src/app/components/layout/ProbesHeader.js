@@ -9,6 +9,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { CartContext } from '../AppContext';
 import { useContext } from 'react';
 import Link from 'next/link';
+import ShoppingCart from '../icons/ShoppingCart';
 
 const navigation = [
   { name: 'Home', href: '/', current: true },
@@ -97,7 +98,7 @@ export default function ProbesHeader({ profileImage }) {
                       </Link>
 
                       {/* Account image Profile */}
-                      <div className="pr-2">
+                      <div className="pr-0 sm:pr-2">
                         <Menu as="div" className="relative ml-3 w-10">
                           <div>
                             <Menu.Button
@@ -213,8 +214,11 @@ export default function ProbesHeader({ profileImage }) {
                 </nav>
 
                 {/* Cart  */}
-                <Link href={'/cart'} className="text-gray-500 font-semibold">
-                  Cart ({cartProducts.length})
+                <Link href={'/cart'} className="relative">
+                  <ShoppingCart />
+                  <span className="absolute -top-3 -right-3 bg-primary text-white text-xs p-1 px-1 rounded-full leading-3">
+                    {cartProducts.length}
+                  </span>
                 </Link>
               </div>
             </div>

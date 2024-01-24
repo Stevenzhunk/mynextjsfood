@@ -1,5 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 export default function MenuItemFile({ onAddToCart, ...item }) {
-  const { image, description, name, basePrice } = item;
+  const { image, description, name, basePrice, sizes, extraIngredientPrices } =
+    item;
   return (
     <div
       className="bg-gray-200 p-4 rounded-lg text-center group hover:bg-white hover:shadow-md hover:shadow-black/25 transition-all"
@@ -20,7 +22,11 @@ export default function MenuItemFile({ onAddToCart, ...item }) {
         onClick={onAddToCart}
         className="bg-primary mt-4 text-white rounded-full px-8 py-2"
       >
-        Add to cart ${basePrice}
+        {sizes?.length > 0 || extraIngredientPrices?.length > 0 ? (
+          <span>Add to cart (from${basePrice})</span>
+        ) : (
+          <span>Add to cart ${basePrice}</span>
+        )}
       </button>
     </div>
   );
