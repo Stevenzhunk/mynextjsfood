@@ -10,6 +10,7 @@ import { CartContext } from '../AppContext';
 import { useContext } from 'react';
 import Link from 'next/link';
 import ShoppingCart from '../icons/ShoppingCart';
+import { useProfile } from '../UseProfile';
 
 const navigation = [
   { name: 'Home', href: '/', current: true },
@@ -28,7 +29,8 @@ export default function ProbesHeader({ profileImage }) {
   const session = useSession();
   const status = session?.status;
   const userData = session?.data?.user;
-  const userDataImage = userData?.image;
+  const { data: profileData } = useProfile();
+  const userDataImage = profileData?.image;
 
   const { cartProducts } = useContext(CartContext);
 
