@@ -9,7 +9,6 @@ import { useProfile } from '@/app/components/UseProfile';
 
 export default function CartPage() {
   const { cartProducts, removeCartProducts } = useContext(CartContext);
-
   const [address, setAddress] = useState({});
   const { data: profileData } = useProfile();
 

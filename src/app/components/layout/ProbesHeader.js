@@ -24,7 +24,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function ProbesHeader({ profileImage }) {
+export default function ProbesHeader() {
   //recover the session data user
   const session = useSession();
   const status = session?.status;
@@ -68,13 +68,13 @@ export default function ProbesHeader({ profileImage }) {
                 </div>
 
                 {/* titles nav */}
-                <div className="hidden lg:flex sm:ml-6 sm:flex">
+                <div className="hidden lg:flex sm:ml-6 sm:flex h-8 mt-4">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
-                        className="rounded-full px-3 py-2 text-base font-bold flex items-center text-gray-500 hover:bg-primary hover:text-white hover:rounded-full"
+                        className="rounded-full px-3 py-2 text-base font-bold flex items-center hover:bg-primary hover:text-white hover:rounded-full text-black sm:text-gray-500"
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
@@ -104,14 +104,17 @@ export default function ProbesHeader({ profileImage }) {
                         <Menu as="div" className="relative ml-3 w-10">
                           <div>
                             <Menu.Button
-                              className="relative flex rounded-full bg-white text-sm p-1"
-                              style={{ padding: '1px !important' }}
+                              className="relative flex rounded-none bg-white text-sm p-1 border-none w-12"
+                              style={{
+                                padding: '1px !important',
+                                border: 'none!important',
+                              }}
                             >
                               <span className="absolute -inset-1.5" />
                               <span className="sr-only">Open user menu</span>
                               {userDataImage ? (
                                 <img
-                                  className="h-8 w-8 rounded-full"
+                                  className="h-9 w-9 rounded-full"
                                   src={userDataImage}
                                   alt=""
                                 />
@@ -235,9 +238,9 @@ export default function ProbesHeader({ profileImage }) {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium h-4'
+                      ? 'bg-primary text-white  h-8 sm:h-auto'
+                      : 'text-gray-500 mb-8 hover:bg-gray-700 hover:text-white',
+                    'flex items-center justify-center rounded-md px-3 py-8 text-base font-medium h-4 '
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >
