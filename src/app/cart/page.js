@@ -61,6 +61,7 @@ export default function CartPage() {
           {cartProducts?.length == 0 && (
             <div> No products in our shopping cart</div>
           )}
+
           {cartProducts?.length > 0 &&
             cartProducts.map((product, index) => (
               <div
