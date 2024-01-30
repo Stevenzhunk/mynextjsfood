@@ -36,6 +36,7 @@ export default function CartPage() {
   }
 
   async function proceedToCheckout(ev) {
+    ev.preventDefault();
     const response = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
@@ -46,9 +47,9 @@ export default function CartPage() {
     });
 
     const link = await response.json();
-    window.location = link;
+    // window.location = link;
   }
-
+  console.log({ cartProducts });
   return (
     <section className="mt-8">
       <div className="text-center mb-8">
@@ -112,7 +113,7 @@ export default function CartPage() {
               Delivery <br />
               Total:
             </div>
-            <div className="text-lg font-semibold pl-2 text-right">
+            <div className=" font-semibold pl-2 text-right">
               ${subtotal}
               <br />
               $5 <br />${subtotal + 5}

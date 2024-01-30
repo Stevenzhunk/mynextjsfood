@@ -1,11 +1,14 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { MenuItem } from '@/app/models/MenuItem';
+import { Order } from '@/app/models/Order';
 import mongoose from 'mongoose';
 import { getServerSession } from 'next-auth';
-import { Order } from '@/app/models/Order';
 const stripe = require('stripe')(process.env.STRIPE_SK);
-export async function POST(req) {
-  mongoose.connect(process.env.MONGO_URL_NEXT);
 
-  const { address, cartProducts } = await req.json();
+export async function POST(req) {
+  mongoose.connect(process.env.MONGO_URL);
+
+  const { cartProducts, address } = await req.json();
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
@@ -17,8 +20,29 @@ export async function POST(req) {
   });
 
   const stripeLineItems = [];
-  for (const product of cartProducts) {
-    const productName = product.name;
+  for (const cartProduct of cartProducts) {
+    const productInfo = await MenuItem.findById(cartProduct._id);
+
+    let productPrice = productInfo.basePrice;
+    if (cartProduct.size) {
+      const size = productInfo.sizes.find(
+        (size) => size._id.toString() === cartProduct.size._id.toString()
+      );
+      productPrice += size.price;
+    }
+    if (cartProduct.extras?.length > 0) {
+      for (const cartProductExtraThing of cartProduct.extras) {
+        const productExtras = productInfo.extraIngredientPrices;
+        const extraThingInfo = productExtras.find(
+          (extra) =>
+            extra._id.toString() === cartProductExtraThing._id.toString()
+        );
+        productPrice += extraThingInfo.price;
+      }
+    }
+
+    const productName = cartProduct.name;
+
     stripeLineItems.push({
       quantity: 1,
       price_data: {
@@ -26,6 +50,7 @@ export async function POST(req) {
         product_data: {
           name: productName,
         },
+        unit_amount: productPrice * 100,
       },
     });
   }
@@ -33,10 +58,10 @@ export async function POST(req) {
   const stripeSession = await stripe.checkout.sessions.create({
     line_items: stripeLineItems,
     mode: 'payment',
-    custumer_email: userEmail,
+    customer_email: userEmail,
     success_url: process.env.NEXTAUTH_URL + 'cart?success=1',
     cancel_url: process.env.NEXTAUTH_URL + 'cart?canceled=1',
-    metadata: { orderID: orderDoc._id },
+    metadata: { orderId: orderDoc._id },
     shipping_options: [
       {
         shipping_rate_data: {
@@ -47,4 +72,6 @@ export async function POST(req) {
       },
     ],
   });
+
+  return Response.json(stripeSession.url);
 }
