@@ -97,6 +97,7 @@ export default function CartPage() {
               <CartProduct
                 product={product}
                 onRemove={removeCartProducts}
+                index={index}
                 key={index}
               />
             ))}

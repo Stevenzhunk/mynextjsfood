@@ -52,7 +52,7 @@ export default function OrderPage() {
         <div className="grid md:grid-cols-2 md:gap-16">
           <div>
             {order.cartProducts.map((product,index) =>(
-              <CartProduct product={product} index={index} />
+              <CartProduct product={product} key={index} />
             ))}
             <div className='text-right py-2 text-gray-500'>
               Subtotal : <span className='text-black font-bold inline-block w-8'>${subtotal}</span><br />
