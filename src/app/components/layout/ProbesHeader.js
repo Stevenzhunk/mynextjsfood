@@ -60,11 +60,20 @@ export default function ProbesHeader() {
               {/* nav icon */}
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-16 w-auto"
-                    src="/planet.jpg"
-                    alt="Your Company"
-                  />
+                  {status === 'authenticated' && (
+                    <img
+                      className="h-16 w-auto hsm:pr-8 "
+                      src="/planet.jpg"
+                      alt="Your Company"
+                    />
+                  )}
+                  {status !== 'authenticated' && (
+                    <img
+                      className="h-16 w-auto hsm:pr-8 hidden sm:block"
+                      src="/planet.jpg"
+                      alt="Your Company"
+                    />
+                  )}
                 </div>
 
                 {/* titles nav */}

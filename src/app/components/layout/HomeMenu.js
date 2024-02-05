@@ -42,7 +42,7 @@ export default function HomeMenu() {
           mainHeader={'Our Best Sellers'}
         />
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-3 gap-4">
         {bestSellers?.length > 0 &&
           bestSellers.map((item, index) => <MenuItem {...item} key={index} />)}
       </div>

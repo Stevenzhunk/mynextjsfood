@@ -25,13 +25,15 @@ export default function Header() {
           href="/"
         >
           {/* STPIZZA{''} */}
-          <Image
-            src="/planet.jpg"
-            alt="icon"
-            width={120}
-            height={120}
-            className="w-20 items-center justify-center"
-          />
+          <div>
+            <Image
+              src="/planet.jpg"
+              alt="icon"
+              width={120}
+              height={120}
+              className="w-20 items-center justify-center hidden md:block"
+            />
+          </div>
         </Link>
         <Link href={'/'}>Home</Link>
         <Link href={'/menu'}>Menu</Link>

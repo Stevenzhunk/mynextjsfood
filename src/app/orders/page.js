@@ -33,7 +33,7 @@ export default function OrdersPage() {
         {orders?.length > 0 &&
           orders.map((order, index) => (
             <div
-              className="bg-gray-100 mb-2 p-4 rounded-lg items-center flex gap-6"
+              className="bg-gray-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-6"
               key={index}
             >
               <div className="grow flex items-center gap-6">

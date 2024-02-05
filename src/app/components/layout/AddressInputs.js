@@ -11,7 +11,7 @@ export default function AddressInputs({
         disabled={disabled}
         type="tel"
         placeholder="Phone number"
-        value={phone}
+        value={phone || ''}
         onChange={(ev) => setAddressProp('phone', ev.target.value)}
       />
       <label>Street Adress</label>
@@ -19,7 +19,7 @@ export default function AddressInputs({
         disabled={disabled}
         type="text"
         placeholder="Street Address"
-        value={streetAddress}
+        value={streetAddress || ''}
         onChange={(ev) => setAddressProp('streetAddress', ev.target.value)}
       />
       <div className="grid grid-cols-2 gap-2">
@@ -29,7 +29,7 @@ export default function AddressInputs({
             disabled={disabled}
             type="text"
             placeholder="City"
-            value={city}
+            value={city || ''}
             onChange={(ev) => setAddressProp('city', ev.target.value)}
           />
         </div>
@@ -39,7 +39,7 @@ export default function AddressInputs({
             disabled={disabled}
             type="text"
             placeholder="Postal Code"
-            value={postalCode}
+            value={postalCode || ''}
             onChange={(ev) => setAddressProp('postalCode', ev.target.value)}
           />
         </div>
@@ -50,7 +50,7 @@ export default function AddressInputs({
         disabled={disabled}
         type="text"
         placeholder="Country"
-        value={country}
+        value={country || ''}
         onChange={(ev) => setAddressProp('country', ev.target.value)}
       />
     </>
