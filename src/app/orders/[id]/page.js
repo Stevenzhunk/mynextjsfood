@@ -37,7 +37,7 @@ export default function OrderPage() {
     <section className="max-w-2xl mx-auto mt-8 ">
       <div className="text-center">
         <SectionHeaders mainHeader={'Your Order'} />
-        <div className="my-4">
+        <div className="my-4 mb-8">
           <p>Thanks for your order</p>
           <p>We Will call you when your order woill be on the way</p>
         </div>
