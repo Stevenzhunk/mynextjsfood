@@ -14,6 +14,14 @@ export default function CartPage() {
   const { data: profileData } = useProfile();
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (window.location.href.includes('canceled=1')) {
+        toast.error('Payment failed 😔');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     if (profileData?.city) {
       const { phone, streetAddress, city, postalCode, country } = profileData;
       const addressFromProfile = {
@@ -63,7 +71,14 @@ export default function CartPage() {
       error: 'Something went wrong... Please try again later',
     });
   }
-  console.log({ cartProducts });
+  if (cartProducts?.length === 0) {
+    return (
+      <section className="mt-8 text-center">
+        <SectionHeaders mainHeader="Cart" />
+        <p className="mt-4">Your shopping cart is empty 😉</p>
+      </section>
+    );
+  }
   return (
     <section className="mt-8">
       <div className="text-center mb-8">
