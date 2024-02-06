@@ -22,7 +22,7 @@ export default function EditMenuItemPage() {
         setMenuItem(item);
       });
     });
-  }, []);
+  }, [id]);
 
   async function handleFormSubmit(ev, data) {
     ev.preventDefault();
