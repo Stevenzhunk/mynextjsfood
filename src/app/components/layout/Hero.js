@@ -9,7 +9,7 @@ export default function Hero() {
           <h1 className="text-4xl font-semibold">
             Everything
             <br /> is better
-            <br /> with a <span className="text-primary">Burger</span>
+            <br /> with a <span className="text-primary">Burger XL</span>
           </h1>
           <p className="my-6 text-gray-500 text-sm">
             A hamburger is the missing piece that makes every day complete, a

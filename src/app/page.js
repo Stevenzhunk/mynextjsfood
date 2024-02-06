@@ -11,20 +11,19 @@ export default function Home() {
         <SectionHeaders subHeader={'Our story'} mainHeader={'About us'} />
         <div className="text-gray-500 max-w-md mx-auto mt-4 flex flex-col gap-4">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            metus ex, pulvinar a neque eu, varius tincidunt ex. Duis orci neque,
-            tincidunt id dolor eget, congue tempus nisl. Proin aliquam vulputate
-            orci vel tincidunt. Fusce maximus tincidunt metus. Ut fermentum
-            blandit lectus, non pellentesque felis aliquet et. Vivamus ac
-            malesuada massa.
+            "At BurgerMoon we're more than just a food destination; we're a
+            culinary adventure. Our commitment to quality ingredients and
+            exceptional flavors sets us apart. Whether you're indulging in our
+            signature burgers, sipping on a refreshing milkshake, or enjoying
+            the zing of our perfectly seasoned chicken wings, every bite is a
+            celebration of taste and innovation."
           </p>
           <p>
-            Phasellus ex nisl, pretium at dui in, varius feugiat felis. Donec et
-            arcu rhoncus, consequat magna sit amet, dignissim elit.
-          </p>
-          <p>
-            Pellentesque vulputate, purus vel fermentum blandit, purus leo
-            ullamcorper mi, eu egestas mauris risus ut tortor.
+            "Join us at BurgerMoon and experience the thrill of bold flavors and
+            unforgettable meals. Whether you're grabbing a quick bite or
+            treating yourself to a feast, we're here to exceed your
+            expectations. Come taste the difference at BurgerBlast – where every
+            meal is a masterpiece."
           </p>
         </div>
       </section>
@@ -36,9 +35,9 @@ export default function Home() {
         <div className="mt-8">
           <a
             className="text-4xl underline text-gray-500"
-            href="+46 783 128 158"
+            href="+11 783 128 158"
           >
-            +46 783 128 158
+            +11 783 128 158
           </a>
         </div>
       </section>

@@ -15,8 +15,6 @@ import { useProfile } from '../UseProfile';
 const navigation = [
   { name: 'Home', href: '/', current: true },
   { name: 'Menu', href: '/menu', current: false },
-  { name: 'About', href: '#about', current: false },
-  { name: 'Contact', href: '#contact', current: false },
 ];
 
 //Show dont show if not the current path
