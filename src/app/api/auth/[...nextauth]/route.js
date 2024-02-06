@@ -4,7 +4,6 @@ import { User } from '@/app/models/User';
 import NextAuth, { getServerSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import { UserInfo } from '@/app/models/UserInfo';
 
 export const authOptions = {
   secret: process.env.SECRET,
@@ -51,23 +50,6 @@ export const authOptions = {
   },
 };
 
-// Middleware for CheckAdmin
-async function isAdmin() {
-  const session = await getServerSession(authOptions);
-  const userEmail = session?.user?.email;
-
-  if (!userEmail) {
-    return false;
-  }
-  const userInfo = await UserInfo.findOne({ email: userEmail });
-
-  if (!userInfo) {
-    return false;
-  }
-  console.log(userInfo.admin);
-  return userInfo.admin;
-}
-
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST, isAdmin };
+export { handler as GET, handler as POST };
