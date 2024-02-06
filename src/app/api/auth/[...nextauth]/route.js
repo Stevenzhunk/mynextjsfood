@@ -64,7 +64,6 @@ export async function isAdmin() {
   if (!userInfo) {
     return false;
   }
-  console.log(userInfo.admin);
   return userInfo.admin;
 }
 
