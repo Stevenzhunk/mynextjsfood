@@ -9,11 +9,11 @@ export default function Hero() {
           <h1 className="text-4xl font-semibold">
             Everything
             <br /> is better
-            <br /> with a <span className="text-primary">Pizza</span>
+            <br /> with a <span className="text-primary">Burger</span>
           </h1>
           <p className="my-6 text-gray-500 text-sm">
-            Pizza is the missing piece that make every day complete, a simple
-            yet delicious joy in life
+            A hamburger is the missing piece that makes every day complete, a
+            simple yet delicious joy in life.
           </p>
 
           <div className="flex gap-4">
@@ -31,8 +31,8 @@ export default function Hero() {
 
         <div className="relative hidden md:block">
           <Image
-            src={'/pizza.png'}
-            alt={'Pizza'}
+            src={'/burger.png'}
+            alt={'Burger'}
             className="object-contain w-full h-full absolute"
             width={800}
             height={800}

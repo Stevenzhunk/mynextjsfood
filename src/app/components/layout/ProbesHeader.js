@@ -63,14 +63,14 @@ export default function ProbesHeader() {
                   {status === 'authenticated' && (
                     <img
                       className="h-16 w-auto hsm:pr-8 "
-                      src="/planet.jpg"
+                      src="/burgermoon.jpg"
                       alt="Your Company"
                     />
                   )}
                   {status !== 'authenticated' && (
                     <img
                       className="h-16 w-auto hsm:pr-8 hidden sm:block"
-                      src="/planet.jpg"
+                      src="/burgermoon.jpg"
                       alt="Your Company"
                     />
                   )}

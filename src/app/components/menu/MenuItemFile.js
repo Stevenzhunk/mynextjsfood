@@ -10,7 +10,7 @@ export default function MenuItemFile({ onAddToCart, ...item }) {
       <div className="text-center">
         <img
           src={image}
-          alt="pizza"
+          alt="itemMenu"
           className="max-h-auto max-h-24 block mx-auto"
         />
       </div>

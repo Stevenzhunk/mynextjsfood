@@ -39,7 +39,6 @@ export const authOptions = {
         const passwordOk = user && bcrypt.compareSync(password, user.password);
 
         if (passwordOk) {
-          console.log(user);
           return user;
         }
         return null;
@@ -55,7 +54,6 @@ export const authOptions = {
 // Middleware for CheckAdmin
 export async function isAdmin() {
   const session = await getServerSession(authOptions);
-  console.log(session);
   const userEmail = session?.user?.email;
 
   if (!userEmail) {

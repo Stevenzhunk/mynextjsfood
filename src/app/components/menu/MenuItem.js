@@ -76,6 +76,7 @@ export default function MenuItem(menuItem) {
                 width={200}
                 height={200}
                 className="mx-auto"
+                style={{ width: 'auto', height: 'auto' }}
               />
               <h2 className="text-lg font-bold text-center mb-2">{name}</h2>
               <p className="text-center text-gray-500 text-sm mb-2">
@@ -92,7 +93,7 @@ export default function MenuItem(menuItem) {
                     >
                       <input
                         type="radio"
-                        onClick={() => setSelectedSize(size)}
+                        onChange={() => setSelectedSize(size)}
                         checked={selectedSize?.name === size.name}
                         name="size"
                       />

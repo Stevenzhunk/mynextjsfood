@@ -24,7 +24,6 @@ export default function Header() {
           className="text-primary font-semibold text-2xl flex gap-2"
           href="/"
         >
-          {/* STPIZZA{''} */}
           <div>
             <Image
               src="/planet.jpg"
