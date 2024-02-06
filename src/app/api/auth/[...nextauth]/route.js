@@ -51,7 +51,6 @@ export const authOptions = {
   },
 };
 
-//Check Admin
 async function isAdmin() {
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
@@ -69,4 +68,5 @@ async function isAdmin() {
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST, isAdmin };
+export default handler;
+export { isAdmin };
