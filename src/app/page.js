@@ -22,8 +22,7 @@ export default function Home() {
             "Join us at BurgerMoon and experience the thrill of bold flavors and
             unforgettable meals. Whether you're grabbing a quick bite or
             treating yourself to a feast, we're here to exceed your
-            expectations. Come taste the difference at BurgerBlast – where every
-            meal is a masterpiece."
+            expectations. where every meal is a masterpiece."
           </p>
         </div>
       </section>
