@@ -51,8 +51,8 @@ export const authOptions = {
   },
 };
 
-// Middleware for CheckAdmin
-export async function isAdmin() {
+//Check Admin
+async function isAdmin() {
   const session = await getServerSession(authOptions);
   const userEmail = session?.user?.email;
 
@@ -69,4 +69,4 @@ export async function isAdmin() {
 
 const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, isAdmin };
